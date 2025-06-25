@@ -1,2 +1,4 @@
 # osdevjournal
-OS Dev journal
+A repo for my current learning project
+
+https://littleosbook.github.io/
