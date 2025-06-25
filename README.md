@@ -1,0 +1,2 @@
+# osdevjournal
+OS Dev journal
