@@ -1,6 +1,11 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
+#define SCREEN_WIDTH        80
+#define SCREEN_HEIGHT       25
+#define FG                  FB_WHITE
+#define BG                  FB_BLACK
+
 #define FB_BLACK             0
 #define FB_BLUE              1
 #define FB_GREEN             2
@@ -23,5 +28,8 @@
 #define FB_DARK_MAGENTA      19
 #define FB_DARK_BROWN        20
 #define FB                   0x000B8000
+
+extern void outb(unsigned short port, unsigned char val);
+
 
 #endif //KERNEL_H
