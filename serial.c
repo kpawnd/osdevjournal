@@ -17,7 +17,7 @@ void serial_configure_line(unsigned short com) {
 }
 
 void serial_write_char(unsigned short com, char c) {
-    while (!serial_is_transmit_fifo_empty(com));
+    while (!serial_is_transmit_fifo_empty(com)) {}
     outb(SERIAL_DATA_PORT(com), c);
 }
 

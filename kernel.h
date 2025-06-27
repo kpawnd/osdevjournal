@@ -1,11 +1,12 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
+#include "stdint.h"
+
 #define SCREEN_WIDTH        80
 #define SCREEN_HEIGHT       25
 #define FG                  FB_WHITE
 #define BG                  FB_BLACK
-
 #define FB_BLACK             0
 #define FB_BLUE              1
 #define FB_GREEN             2

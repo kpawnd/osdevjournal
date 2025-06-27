@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include "serial.h"
 #include "io.h"
+#include "gdt.h"
 
 static unsigned short cursor_pos = 0;
 
@@ -68,12 +69,14 @@ int write(char *buf, unsigned int len) {
 }
 
 void kmain() {
-    write("Hello, world!", 13);
+    char test[] = "Hello World!";
+    write(test, sizeof(test));
+    gdt_install();
 
     serial_configure_baud_rate(SERIAL_COM1_BASE, 1);
     serial_configure_line(SERIAL_COM1_BASE);
     serial_write_str(SERIAL_COM1_BASE, "Serial initialized!\n");
-    for (volatile int d = 0; d < 100000; d++);
+    for (volatile int d = 0; d < 100000; d++) {}
 
     while (1) {}
 }

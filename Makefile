@@ -4,6 +4,7 @@ ASM_OBJ = kernel.o
 IO_OBJ = io.o
 C_OBJ = kernel_c.o serial.o
 OBJ = $(ASM_OBJ) $(C_OBJ) $(IO_OBJ)
+GDT_OBJ = gdt.o gdt_flush.o
 
 ASM = kernel.asm
 IOASM = io.asm
@@ -30,9 +31,13 @@ kernel_c.o: kernel.c
 serial.o: serial.c
 	$(CC) $(CFLAGS) $< -o $@
 
+$(GDT_OBJ): gdt.c gdt.h gdt_flush.asm
+	gcc $(CFLAGS) -c gdt.c -o gdt.o
+	nasm -f elf32 gdt_flush.asm -o gdt_flush.o
+
 # Link kernel
-$(KERNEL_BIN): $(OBJ)
-	ld $(LDFLAGS) -o $@ $(OBJ)
+$(KERNEL_BIN): $(ASM_OBJ) $(C_OBJ) $(IO_OBJ) $(GDT_OBJ)
+	ld $(LDFLAGS) -o $(KERNEL_BIN) $^
 
 # Build ISO
 $(ISO_NAME): $(KERNEL_BIN)
@@ -50,6 +55,7 @@ monitor: $(ISO_NAME)
 
 # Clean up
 clean:
-	rm -rf $(ASM_OBJ) $(C_OBJ) $(IO_OBJ) $(KERNEL_BIN) $(ISO_NAME) iso
+	rm -f $(ASM_OBJ) $(C_OBJ) $(IO_OBJ) $(GDT_OBJ) $(KERNEL_BIN) $(ISO_NAME)
+	rm -rf iso
 
 .PHONY: all run monitor clean
